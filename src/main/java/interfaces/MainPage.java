@@ -1,5 +1,7 @@
 package interfaces;
 
+import annotations.Selector;
+
 public interface MainPage {
 
     @Selector(xpath = ".//*[@test-attr='input_search']")

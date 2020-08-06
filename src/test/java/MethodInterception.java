@@ -1,5 +1,5 @@
 import interfaces.MainPage;
-import interfaces.Selector;
+import annotations.Selector;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Proxy;
