@@ -1,5 +1,8 @@
 import interfaces.MainPage;
+import interfaces.Selector;
 import org.testng.annotations.Test;
+
+import java.lang.reflect.Proxy;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -15,6 +18,16 @@ public class MethodInterception {
     }
 
     private MainPage createPage(Class clazz) {
-        return null;
+        return (MainPage) Proxy.newProxyInstance(
+                clazz.getClassLoader(),
+                new Class[] { clazz },
+                (proxy, method, methodArgs) -> {
+                    if (method.getAnnotation(Selector.class) != null) {
+                        return method.getAnnotation(Selector.class).xpath();
+                    } else {
+                        throw new UnsupportedOperationException(
+                                "Unsupported method: " + method.getName());
+                    }
+                });
     }
 }
